@@ -31,6 +31,13 @@ private:
     Slider sustainSlider;
     Slider releaseSlider;
 
+    Label attackLabel;
+    Label decayLabel;
+    Label sustainLabel;
+    Label releaseLabel;
+
+
+
 
 
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attackAttachment;
