@@ -10,11 +10,32 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-YellowSynthAudioProcessorEditor::YellowSynthAudioProcessorEditor (YellowSynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+YellowSynthAudioProcessorEditor::YellowSynthAudioProcessorEditor(YellowSynthAudioProcessor& p)
+    : AudioProcessorEditor(&p), audioProcessor(p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
+
+    attackSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+    attackSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 20); 
+    attackAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getAPVTS(), "ATTACK", attackSlider);
+    addAndMakeVisible(&attackSlider);
+
+    decaykSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+    decaykSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 20);
+    decayAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getAPVTS(), "ATTACK", decaykSlider);
+    addAndMakeVisible(&decaykSlider);
+
+    sustainSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+    sustainSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 20);
+    sustainAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getAPVTS(), "ATTACK", sustainSlider);
+    addAndMakeVisible(&sustainSlider);
+
+    releaseSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+    releaseSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 20);
+    releaseAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getAPVTS(), "ATTACK", releaseSlider);
+    addAndMakeVisible(&releaseSlider);
+
+
+
     setSize (400, 300);
 }
 
@@ -35,6 +56,9 @@ void YellowSynthAudioProcessorEditor::paint (juce::Graphics& g)
 
 void YellowSynthAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    attackSlider.setBounds(0, 0, 100, 100);
+    decaykSlider.setBounds(100, 0, 100, 100);
+    sustainSlider.setBounds(200, 0, 100, 100);
+    releaseSlider.setBounds(300, 0, 100, 100);
+
 }
