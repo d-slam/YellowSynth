@@ -19,7 +19,7 @@ YellowSynthAudioProcessor::YellowSynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), mAPVTS(*this,nullptr,"PARAMETERS",createParameters())
 #endif
 {
     synth.addSound(new SynthSound());
@@ -164,6 +164,18 @@ void YellowSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
 
+}
+
+AudioProcessorValueTreeState::ParameterLayout YellowSynthAudioProcessor::createParameters() 
+{
+    std::vector<std::unique_ptr<RangedAudioParameter>> parameters;
+
+    parameters.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.0f, 5.0f, 0.0f));
+    parameters.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", 0.0f, 3.0f, 2.0f));
+    parameters.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
+    parameters.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 2.0f));
+
+    return { parameters.begin(), parameters.end() };
 }
 
 //==============================================================================
