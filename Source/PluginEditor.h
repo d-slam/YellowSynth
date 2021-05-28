@@ -31,13 +31,12 @@ private:
     Slider sustainSlider;
     Slider releaseSlider;
 
+    ComboBox oscSelector;
+
     Label attackLabel;
     Label decayLabel;
     Label sustainLabel;
     Label releaseLabel;
-
-
-
 
 
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attackAttachment;
@@ -45,7 +44,7 @@ private:
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sustainAttachment;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> releaseAttachment;
 
-
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
 
 
     YellowSynthAudioProcessor& audioProcessor;

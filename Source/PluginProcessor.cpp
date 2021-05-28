@@ -19,7 +19,7 @@ YellowSynthAudioProcessor::YellowSynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), mAPVTS(*this,nullptr,"PARAMETERS",createParameters())
+                       ), mAPVTS(*this,nullptr,"PARAMETERS", createParams())
 #endif
 {
     synth.addSound(new SynthSound());
@@ -168,16 +168,18 @@ void YellowSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
 }
 
-AudioProcessorValueTreeState::ParameterLayout YellowSynthAudioProcessor::createParameters() 
+AudioProcessorValueTreeState::ParameterLayout YellowSynthAudioProcessor::createParams() 
 {
-    std::vector<std::unique_ptr<RangedAudioParameter>> parameters;
+    std::vector<std::unique_ptr<RangedAudioParameter>> params;
 
-    parameters.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.0f, 5.0f, 0.0f));
-    parameters.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", 0.0f, 3.0f, 2.0f));
-    parameters.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
-    parameters.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 2.0f));
+    params.push_back(std::make_unique<AudioParameterChoice>("OSC", "Oscillator", StringArray{ "Sine","Saw","Sqr" }, 0));
 
-    return { parameters.begin(), parameters.end() };
+    params.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", NormalisableRange<float>{0.1f, 1.0f}, 0.1f));
+    params.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", NormalisableRange<float>{0.1f, 1.0f}, 0.1f));
+    params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", NormalisableRange<float>{0.1f, 1.0f}, 1.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", NormalisableRange<float>{0.1f, 3.0f}, 0.4f));
+
+    return { params.begin(), params.end() };
 }
 
 //==============================================================================

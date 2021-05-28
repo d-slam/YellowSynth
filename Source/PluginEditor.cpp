@@ -48,6 +48,9 @@ YellowSynthAudioProcessorEditor::YellowSynthAudioProcessorEditor(YellowSynthAudi
     releaseLabel.attachToComponent(&releaseSlider, false);
 
 
+    oscSelAttachment = std::make_unique<AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.getAPVTS(), "OSC", oscSelector);
+
+
 
     setSize (400, 300);
 }
