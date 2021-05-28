@@ -57,7 +57,7 @@ public:
 
     AudioProcessorValueTreeState& getAPVTS() { return mAPVTS; }
 
-    int testPenis;
+    //int testPenis;
 
 private:
     Synthesiser synth;

@@ -95,7 +95,9 @@ void YellowSynthAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void YellowSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    synth.setCurrentPlaybackSampleRate(sampleRate);
+    synth.setCurrentPlaybackSampleRate(sampleRate); 
+
+    
 
 
     for (int i = 0; i < synth.getNumVoices(); i++) 
