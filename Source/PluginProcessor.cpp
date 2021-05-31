@@ -19,7 +19,7 @@ YellowSynthAudioProcessor::YellowSynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), mAPVTS(*this,nullptr,"PARAMETERS", createParams())
 #endif
 {
     synth.addSound(new SynthSound());
@@ -95,7 +95,9 @@ void YellowSynthAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void YellowSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    synth.setCurrentPlaybackSampleRate(sampleRate);
+    synth.setCurrentPlaybackSampleRate(sampleRate); 
+
+    
 
 
     for (int i = 0; i < synth.getNumVoices(); i++) 
@@ -164,6 +166,20 @@ void YellowSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
 
+}
+
+AudioProcessorValueTreeState::ParameterLayout YellowSynthAudioProcessor::createParams() 
+{
+    std::vector<std::unique_ptr<RangedAudioParameter>> params;
+
+    params.push_back(std::make_unique<AudioParameterChoice>("OSC", "Oscillator", StringArray{ "Sine","Saw","Sqr" }, 0));
+
+    params.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", NormalisableRange<float>{0.1f, 1.0f}, 0.1f));
+    params.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", NormalisableRange<float>{0.1f, 1.0f}, 0.1f));
+    params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", NormalisableRange<float>{0.1f, 1.0f}, 1.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", NormalisableRange<float>{0.1f, 3.0f}, 0.4f));
+
+    return { params.begin(), params.end() };
 }
 
 //==============================================================================

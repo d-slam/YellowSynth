@@ -41,6 +41,7 @@ private:
 
 	ADSR adsr;
 	ADSR::Parameters adsrParams;
+	AudioBuffer<float> synthBuffer;
 
 	//dsp::Oscillator<float> osc{ [](float x) {return std::sin(x); } };         //sin wave
 	dsp::Oscillator<float> osc{ [](float x) {return x < 0.0f ? -1.0f : 1.0f; } };

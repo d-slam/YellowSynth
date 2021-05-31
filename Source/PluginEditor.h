@@ -25,8 +25,28 @@ public:
     void resized() override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
+
+    Slider attackSlider;
+    Slider decaykSlider;
+    Slider sustainSlider;
+    Slider releaseSlider;
+
+    ComboBox oscSelector;
+
+    Label attackLabel;
+    Label decayLabel;
+    Label sustainLabel;
+    Label releaseLabel;
+
+
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attackAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> decayAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sustainAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> releaseAttachment;
+
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
+
+
     YellowSynthAudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YellowSynthAudioProcessorEditor)

@@ -55,8 +55,16 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    AudioProcessorValueTreeState& getAPVTS() { return mAPVTS; }
+
+    //int testPenis;
+
 private:
     Synthesiser synth;
+
+    AudioProcessorValueTreeState mAPVTS;
+
+    AudioProcessorValueTreeState::ParameterLayout createParams();
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YellowSynthAudioProcessor)
